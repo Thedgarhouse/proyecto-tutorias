@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Asesorias Informales</string>
+    <string name="request_location">This application requires location permissions to locate nearby devices. Please allow the application to access your location.</string>
+    <string name="confirm">OK</string>
+    <string name="check_permission">Check Permission</string>
+    <string name="sign_in">Sign In</string>
+</resources>
