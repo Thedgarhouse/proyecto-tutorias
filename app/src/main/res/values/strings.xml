@@ -4,4 +4,6 @@
     <string name="confirm">OK</string>
     <string name="check_permission">Check Permission</string>
     <string name="sign_in">Sign In</string>
+    <string name="advertise">Advertise</string>
+    <string name="discover">Discover</string>
 </resources>
