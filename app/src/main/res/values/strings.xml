@@ -6,4 +6,10 @@
     <string name="sign_in">Sign In</string>
     <string name="advertise">Advertise</string>
     <string name="discover">Discover</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="location_permission_indicator">Location Permission Indicator</string>
+    <string name="nombre">Nombre:</string>
+    <string name="placeholder">PLACEHOLDER</string>
+    <string name="user_profile_picture">User Profile Picture</string>
+    <string name="email">Email:</string>
 </resources>
