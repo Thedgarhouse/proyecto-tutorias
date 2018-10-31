@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="roles">
+        <item
+            >@string/teacher</item>
+        <item
+            >@string/student</item>
+    </string-array>
+</resources>

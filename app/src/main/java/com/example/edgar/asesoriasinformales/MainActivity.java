@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,13 +39,20 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.Optional;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final int RC_SIGN_IN = 123;
     GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInAccount account;
     Button sign_out_button;
     ImageButton location_permission_button;
     Drawable location_permission_enabled;
     Drawable location_permission_disabled;
+    TextView nameField;
+    TextView emailField;
+    TextView nameTag;
+    TextView emailTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +65,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Set Listener to Sign In button
+        // Activity initial state
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         sign_out_button = findViewById(R.id.sign_out_button);
         location_permission_button = findViewById(R.id.location_permission_button);
         location_permission_button.setEnabled(false);
 
+        nameField = findViewById(R.id.name_text_field);
+        emailField = findViewById(R.id.email_text_field);
+        nameTag = findViewById(R.id.textView);
+        emailTag = findViewById(R.id.textView3);
+        nameField.setText("");
+        emailField.setText("");
+        nameField.setVisibility(View.GONE);
+        emailField.setVisibility(View.GONE);
+        nameTag.setVisibility(View.GONE);
+        emailTag.setVisibility(View.GONE);
         location_permission_enabled = getDrawable(R.drawable.ic_location_on_black_24dp);
         location_permission_enabled.setTint(getColor(R.color.colorEnabledGreen));
         location_permission_disabled = getDrawable(R.drawable.ic_location_off_black_24dp);
@@ -73,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else{
             location_permission_button.setImageDrawable(location_permission_enabled);
         }
+        checkContinueButton();
     }
 
     /**
@@ -83,19 +102,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Permiso requerido");
         builder.setMessage("Esta aplicación requiere permisos. Puede otorgarlos en la pantalla de configuración");
-        builder.setPositiveButton("Ir a configuración", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                openSettings();
-            }
+        builder.setPositiveButton("Ir a configuración", (dialog, which) -> {
+            dialog.cancel();
+            openSettings();
         });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                location_permission_button.setImageDrawable(location_permission_disabled);
-            }
+        builder.setNegativeButton("Cancelar", (dialog, which) -> {
+            dialog.cancel();
+            location_permission_button.setImageDrawable(location_permission_disabled);
         });
         builder.show();
     }
@@ -122,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onPermissionGranted(PermissionGrantedResponse response) {
                 Toast.makeText(getApplicationContext(), "Permiso aprobado!", Toast.LENGTH_SHORT).show();
                 location_permission_button.setImageDrawable(location_permission_enabled);
+                checkContinueButton();
             }
 
             @Override
@@ -138,12 +152,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 token.continuePermissionRequest();
                 location_permission_button.setImageDrawable(location_permission_disabled);
             }
-        }).withErrorListener(new PermissionRequestErrorListener() {
-            @Override
-            public void onError(DexterError error) {
-                Log.i("Dexter Error", "Error regarding location permission request");
-                Toast.makeText(getApplicationContext(), "Error occurred: " + error.toString(), Toast.LENGTH_SHORT).show();
-            }
+        }).withErrorListener(error -> {
+            Log.i("Dexter Error", "Error regarding location permission request");
+            Toast.makeText(getApplicationContext(), "Error occurred: " + error.toString(), Toast.LENGTH_SHORT).show();
         }).check();
     }
 
@@ -162,12 +173,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void signOut(View v) {
         mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getApplicationContext(), "Sesión terminada", Toast.LENGTH_SHORT).show();
-                        updateUI(null);
-                    }
+                .addOnCompleteListener(this, task -> {
+                    Toast.makeText(getApplicationContext(), "Sesión terminada", Toast.LENGTH_SHORT).show();
+                    updateUI(null);
                 });
     }
 
@@ -179,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
 
@@ -228,6 +236,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             View signInButton = findViewById(R.id.sign_in_button);
             signInButton.setEnabled(true);
         }
+        checkContinueButton();
+    }
+
+    private void checkContinueButton() {
+        Button continueButton = findViewById(R.id.continue_button);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED || account == null){
+            continueButton.setVisibility(View.GONE);
+            continueButton.setEnabled(false);
+        }
+        else{
+            continueButton.setVisibility(View.VISIBLE);
+            continueButton.setEnabled(true);
+        }
     }
 
     /**
@@ -271,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
@@ -280,6 +301,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("Sign in Handler", "signInResult:failed code=" + e.getStatusCode());
             updateUI(null);
+        }
+    }
+
+    public void startAdvisory(View v){
+        if((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) && account != null){
+            final ArrayAdapter<String> adapter;
+            String [] rolesArray = getResources().getStringArray(R.array.roles);
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, rolesArray);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.pick_a_role)
+                    .setAdapter(adapter, (dialogInterface, i) -> {
+                        String role = adapter.getItem(i);
+                        Bundle accountBundle = new Bundle();
+                        Optional<Uri> maybePhotoUri = Optional.ofNullable(account.getPhotoUrl()); // Optional magic
+                        String photoUriString = maybePhotoUri.map(Uri::toString).orElse("N/A"); // Even more Optional magic
+                        accountBundle.putString("Photo", photoUriString);
+                        accountBundle.putString("Name", account.getDisplayName());
+                        accountBundle.putString("Email", account.getEmail());
+                        Intent intent = new Intent();
+                        intent.putExtra("Account Bundle", accountBundle);
+                            if(role.equals(getResources().getString(R.string.student))){
+                                intent.setClass(getApplicationContext(), Student_Activity.class);
+                            }
+                            else if (role.equals(getResources().getString(R.string.teacher))){
+                                intent.setClass(getApplicationContext(), Teacher_Activity.class);
+
+                            }
+                            else{
+                                Log.i("Unreachable statement", "Arrived on a dark place in the startAdvisory() method");
+                            }
+                        startActivity(intent);
+
+                    }).show();
+
         }
     }
 }
