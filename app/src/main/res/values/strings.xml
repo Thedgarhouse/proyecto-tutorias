@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">Asesorias Informales</string>
-    <string name="request_location">This application requires location permissions to locate nearby devices. Please allow the application to access your location.</string>
-    <string name="confirm">OK</string>
-    <string name="check_permission">Check Permission</string>
-    <string name="sign_in">Sign In</string>
-    <string name="advertise">Advertise</string>
-    <string name="discover">Discover</string>
+    <string name="app_name">Informal Advisory</string>
+    <string name="location_permission">Check Permission</string>
     <string name="sign_out">Sign Out</string>
-    <string name="location_permission_indicator">Location Permission Indicator</string>
-    <string name="nombre">Nombre:</string>
-    <string name="placeholder">PLACEHOLDER</string>
+    <string name="location_permission_indicator" translatable="false">Location Permission Indicator</string>
+    <string name="name">Name:</string>
+    <string name="placeholder" translatable="false">PLACEHOLDER</string>
     <string name="user_profile_picture">User Profile Picture</string>
-    <string name="email">Email:</string>
+    <string name="email" translatable="false">Email:</string>
+    <string name="continue_string">Continue</string>
+    <string name="pick_a_role">Pick a Role</string>
+    <string name="teacher">Teacher</string>
+    <string name="student">Student</string>
+    <string name="cancel">Cancel</string>
 </resources>

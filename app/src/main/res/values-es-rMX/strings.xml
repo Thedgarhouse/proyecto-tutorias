@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Asesorias Informales</string>
+    <string name="sign_out">Cerrar Sesión</string>
+    <string name="user_profile_picture">Foto de Perfil de Usuario</string>
+    <string name="continue_string">Continuar</string>
+    <string name="name">Nombre</string>
+    <string name="location_permission">Revisar Permiso</string>
+    <string name="pick_a_role">Elegir un Rol</string>
+    <string name="teacher">Maestro</string>
+    <string name="student">Estudiante</string>
+    <string name="cancel">Cancelar</string>
+</resources>
