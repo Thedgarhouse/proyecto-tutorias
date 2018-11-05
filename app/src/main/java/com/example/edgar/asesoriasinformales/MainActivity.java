@@ -2,16 +2,14 @@ package com.example.edgar.asesoriasinformales;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,22 +19,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.Optional;
@@ -45,14 +39,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int RC_SIGN_IN = 123;
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInAccount account;
-    Button sign_out_button;
     ImageButton location_permission_button;
     Drawable location_permission_enabled;
     Drawable location_permission_disabled;
-    TextView nameField;
-    TextView emailField;
-    TextView nameTag;
-    TextView emailTag;
+//    Button sign_out_button;
+//    TextView nameField;
+//    TextView emailField;
+//    TextView nameTag;
+//    TextView emailTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,24 +61,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Activity initial state
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        sign_out_button = findViewById(R.id.sign_out_button);
         location_permission_button = findViewById(R.id.location_permission_button);
         location_permission_button.setEnabled(false);
 
-        nameField = findViewById(R.id.name_text_field);
-        emailField = findViewById(R.id.email_text_field);
-        nameTag = findViewById(R.id.textView);
-        emailTag = findViewById(R.id.textView3);
-        nameField.setText("");
-        emailField.setText("");
-        nameField.setVisibility(View.GONE);
-        emailField.setVisibility(View.GONE);
-        nameTag.setVisibility(View.GONE);
-        emailTag.setVisibility(View.GONE);
+//        sign_out_button = findViewById(R.id.sign_out_button);
+//        nameField = findViewById(R.id.name_text_field);
+//        emailField = findViewById(R.id.email_text_field);
+//        nameTag = findViewById(R.id.textView);
+//        emailTag = findViewById(R.id.textView3);
+//        nameField.setText("");
+//        emailField.setText("");
+//        nameField.setVisibility(View.GONE);
+//        emailField.setVisibility(View.GONE);
+//        nameTag.setVisibility(View.GONE);
+//        emailTag.setVisibility(View.GONE);
         location_permission_enabled = getDrawable(R.drawable.ic_location_on_black_24dp);
         location_permission_enabled.setTint(getColor(R.color.colorEnabledGreen));
         location_permission_disabled = getDrawable(R.drawable.ic_location_off_black_24dp);
         location_permission_disabled.setTint(getColor(R.color.colorDisabledRed));
+        checkLocationPermission();
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             location_permission_button.setImageDrawable(location_permission_disabled);
         }
@@ -129,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * clicks on button, a dialog prompt will ask for this permission from the user. Toast shows
      * result to user. User is reminded that the app needs said permission if user doesn't grant it.
      */
-    public void checkLocationPermission(View v) {
+    private void checkLocationPermission() {
         Dexter.withActivity(this).withPermission(Manifest.permission.ACCESS_COARSE_LOCATION).withListener(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
@@ -187,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
+        checkLocationPermission();
         account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
@@ -204,23 +200,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageView personPhotoView = findViewById(R.id.user_profile_picture);
 
         if(acct != null){
-            String personName = acct.getDisplayName();
-            String personEmail = acct.getEmail();
-            Uri personPhoto = acct.getPhotoUrl();
-
-            Glide.with(this).load(personPhoto).into(personPhotoView);
-            nameField.setText(personName);
-            emailField.setText(personEmail);
-            nameField.setVisibility(View.VISIBLE);
-            emailField.setVisibility(View.VISIBLE);
-            nameTag.setVisibility(View.VISIBLE);
-            emailTag.setVisibility(View.VISIBLE);
-
-            Toast.makeText(getApplicationContext(), "Inicio de sesión con cuenta: " + personEmail, Toast.LENGTH_SHORT).show();
-            Log.i("Initial Sign in email", personEmail);
-            sign_out_button.setEnabled(true);
-            View signInButton = findViewById(R.id.sign_in_button);
-            signInButton.setEnabled(false);
+//            String personName = acct.getDisplayName();
+//            String personEmail = acct.getEmail();
+//            Uri personPhoto = acct.getPhotoUrl();
+//
+//            Glide.with(this).load(personPhoto).into(personPhotoView);
+//            nameField.setText(personName);
+//            emailField.setText(personEmail);
+//            nameField.setVisibility(View.VISIBLE);
+//            emailField.setVisibility(View.VISIBLE);
+//            nameTag.setVisibility(View.VISIBLE);
+//            emailTag.setVisibility(View.VISIBLE);
+//
+//            Toast.makeText(getApplicationContext(), "Inicio de sesión con cuenta: " + personEmail, Toast.LENGTH_SHORT).show();
+//            Log.i("Initial Sign in email", personEmail);
+//            //sign_out_button.setEnabled(true);
+//            View signInButton = findViewById(R.id.sign_in_button);
+//            signInButton.setEnabled(false);
+            startAdvisory();
         }
         else{
             Glide.with(this).clear(personPhotoView);
@@ -232,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             emailTag.setVisibility(View.GONE);
 
             Log.i("Initial Sign in", "No account");
-            sign_out_button.setEnabled(false);
+            //sign_out_button.setEnabled(false);
             View signInButton = findViewById(R.id.sign_in_button);
             signInButton.setEnabled(true);
         }
@@ -304,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void startAdvisory(View v){
+    private void startAdvisory(){
         if((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) && account != null){
             final ArrayAdapter<String> adapter;
             String [] rolesArray = getResources().getStringArray(R.array.roles);
@@ -334,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intent);
 
                     }).show();
-
         }
     }
 }
