@@ -10,4 +10,8 @@
     <string name="teacher">Maestro</string>
     <string name="student">Estudiante</string>
     <string name="cancel">Cancelar</string>
+    <string name="logo">Logo</string>
+    <string name="student_module">Módulo de Estudiante</string>
+    <string name="available">Disponible</string>
+    <string name="teacher_module">Módulo de Maestro</string>
 </resources>

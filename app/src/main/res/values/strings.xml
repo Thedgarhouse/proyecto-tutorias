@@ -12,4 +12,8 @@
     <string name="teacher">Teacher</string>
     <string name="student">Student</string>
     <string name="cancel">Cancel</string>
+    <string name="logo">Logo</string>
+    <string name="student_module">Student Module</string>
+    <string name="available">Available</string>
+    <string name="teacher_module">Teacher Module</string>
 </resources>
