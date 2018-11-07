@@ -13,13 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -42,12 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton location_permission_button;
     Drawable location_permission_enabled;
     Drawable location_permission_disabled;
-//    Button sign_out_button;
-//    TextView nameField;
-//    TextView emailField;
-//    TextView nameTag;
-//    TextView emailTag;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,18 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         location_permission_button = findViewById(R.id.location_permission_button);
         location_permission_button.setEnabled(false);
-
-//        sign_out_button = findViewById(R.id.sign_out_button);
-//        nameField = findViewById(R.id.name_text_field);
-//        emailField = findViewById(R.id.email_text_field);
-//        nameTag = findViewById(R.id.textView);
-//        emailTag = findViewById(R.id.textView3);
-//        nameField.setText("");
-//        emailField.setText("");
-//        nameField.setVisibility(View.GONE);
-//        emailField.setVisibility(View.GONE);
-//        nameTag.setVisibility(View.GONE);
-//        emailTag.setVisibility(View.GONE);
         location_permission_enabled = getDrawable(R.drawable.ic_location_on_black_24dp);
         location_permission_enabled.setTint(getColor(R.color.colorEnabledGreen));
         location_permission_disabled = getDrawable(R.drawable.ic_location_off_black_24dp);
@@ -86,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else{
             location_permission_button.setImageDrawable(location_permission_enabled);
         }
-        checkContinueButton();
     }
 
     /**
@@ -130,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onPermissionGranted(PermissionGrantedResponse response) {
                 Toast.makeText(getApplicationContext(), "Permiso aprobado!", Toast.LENGTH_SHORT).show();
                 location_permission_button.setImageDrawable(location_permission_enabled);
-                checkContinueButton();
             }
 
             @Override
@@ -193,58 +169,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      *                If null, user hasn't signed in.
      */
     private void updateUI(GoogleSignInAccount acct) {
-        TextView nameField = findViewById(R.id.name_text_field);
-        TextView emailField = findViewById(R.id.email_text_field);
-        TextView nameTag = findViewById(R.id.textView);
-        TextView emailTag = findViewById(R.id.textView3);
-        ImageView personPhotoView = findViewById(R.id.user_profile_picture);
-
         if(acct != null){
-//            String personName = acct.getDisplayName();
-//            String personEmail = acct.getEmail();
-//            Uri personPhoto = acct.getPhotoUrl();
-//
-//            Glide.with(this).load(personPhoto).into(personPhotoView);
-//            nameField.setText(personName);
-//            emailField.setText(personEmail);
-//            nameField.setVisibility(View.VISIBLE);
-//            emailField.setVisibility(View.VISIBLE);
-//            nameTag.setVisibility(View.VISIBLE);
-//            emailTag.setVisibility(View.VISIBLE);
-//
-//            Toast.makeText(getApplicationContext(), "Inicio de sesión con cuenta: " + personEmail, Toast.LENGTH_SHORT).show();
-//            Log.i("Initial Sign in email", personEmail);
-//            //sign_out_button.setEnabled(true);
-//            View signInButton = findViewById(R.id.sign_in_button);
-//            signInButton.setEnabled(false);
             startAdvisory();
         }
         else{
-            Glide.with(this).clear(personPhotoView);
-            nameField.setText("");
-            emailField.setText("");
-            nameField.setVisibility(View.GONE);
-            emailField.setVisibility(View.GONE);
-            nameTag.setVisibility(View.GONE);
-            emailTag.setVisibility(View.GONE);
-
             Log.i("Initial Sign in", "No account");
             //sign_out_button.setEnabled(false);
             View signInButton = findViewById(R.id.sign_in_button);
             signInButton.setEnabled(true);
-        }
-        checkContinueButton();
-    }
-
-    private void checkContinueButton() {
-        Button continueButton = findViewById(R.id.continue_button);
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED || account == null){
-            continueButton.setVisibility(View.GONE);
-            continueButton.setEnabled(false);
-        }
-        else{
-            continueButton.setVisibility(View.VISIBLE);
-            continueButton.setEnabled(true);
         }
     }
 
