@@ -2,6 +2,7 @@ package com.example.edgar.asesoriasinformales;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -16,6 +17,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.edgar.asesoriasinformales.connector.DatabaseConnector;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,6 +41,9 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final int RC_SIGN_IN = 123;
     GoogleSignInClient mGoogleSignInClient;
@@ -40,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton location_permission_button;
     Drawable location_permission_enabled;
     Drawable location_permission_disabled;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,32 +184,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateUI(GoogleSignInAccount acct) {
         if(acct != null){
-            DatabaseConnector connector = new DatabaseConnector();
-            ValueEventListener postListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                        Log.i("Post Snapshot Test", postSnapshot.toString());
-                        User usuario = postSnapshot.getValue(User.class);
-                        Log.i("Post Snapshot email", usuario.correo);
-                        if(usuario.correo.equals(acct.getEmail())){
-                            startAdvisory(usuario.rol);
-                            finish();
-                            break;
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.w("Post error", "loadPost:onCancelled", databaseError.toException());
-                }
-            };
-            connector.getUserReference().addListenerForSingleValueEvent(postListener);
+            checkUser(acct.getEmail(), "email");
+            checkUser(acct.getId(), "ID");
         }
         else{
             Log.i("Initial Sign in", "No account");
-            //sign_out_button.setEnabled(false);
             View signInButton = findViewById(R.id.sign_in_button);
             signInButton.setEnabled(true);
         }
@@ -276,5 +267,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             finish();
         }
+    }
+
+    public void checkUser(String loginCredential, String type){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String databaseURLusers = "https://tutorias-220600.firebaseio.com/usuarios";
+        String query;
+        if(type.equals("email")){
+            query = databaseURLusers + ".json" + "?orderBy=\"correo\"&equalTo=\"" + loginCredential + "\"";
+        }
+        else {
+            query = databaseURLusers + "/" + loginCredential + ".json";
+        }
+        // Request a string response from the provided URL.
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, query, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("Check User", response.toString());
+                        try {
+                            String role = response.getString("rol");
+                            startAdvisory(role);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "Error requesting user info. Please check Internet connection and try again", Toast.LENGTH_LONG).show();
+                        Log.e("Check User Error", error.toString());
+                    }
+                });
+        queue.add(jsonObjectRequest);
     }
 }
