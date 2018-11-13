@@ -8,28 +8,30 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.edgar.asesoriasinformales.connector.DatabaseConnector;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-
-import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final int RC_SIGN_IN = 123;
@@ -170,7 +172,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateUI(GoogleSignInAccount acct) {
         if(acct != null){
-            startAdvisory();
+            DatabaseConnector connector = new DatabaseConnector();
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                        Log.i("Post Snapshot Test", postSnapshot.toString());
+                        User usuario = postSnapshot.getValue(User.class);
+                        Log.i("Post Snapshot email", usuario.correo);
+                        if(usuario.correo.equals(acct.getEmail())){
+                            startAdvisory(usuario.rol);
+                            finish();
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("Post error", "loadPost:onCancelled", databaseError.toException());
+                }
+            };
+            connector.getUserReference().addListenerForSingleValueEvent(postListener);
         }
         else{
             Log.i("Initial Sign in", "No account");
@@ -233,36 +256,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void startAdvisory(){
+    private void startAdvisory(String role){
         if((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) && account != null){
-            final ArrayAdapter<String> adapter;
-            String [] rolesArray = getResources().getStringArray(R.array.roles);
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, rolesArray);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.pick_a_role)
-                    .setAdapter(adapter, (dialogInterface, i) -> {
-                        String role = adapter.getItem(i);
-                        Bundle accountBundle = new Bundle();
-                        Optional<Uri> maybePhotoUri = Optional.ofNullable(account.getPhotoUrl()); // Optional magic
-                        String photoUriString = maybePhotoUri.map(Uri::toString).orElse("N/A"); // Even more Optional magic
-                        accountBundle.putString("Photo", photoUriString);
-                        accountBundle.putString("Name", account.getDisplayName());
-                        accountBundle.putString("Email", account.getEmail());
-                        Intent intent = new Intent();
-                        intent.putExtra("Account Bundle", accountBundle);
-                            if(role.equals(getResources().getString(R.string.student))){
-                                intent.setClass(getApplicationContext(), Student_Activity.class);
-                            }
-                            else if (role.equals(getResources().getString(R.string.teacher))){
-                                intent.setClass(getApplicationContext(), Teacher_Activity.class);
-
-                            }
-                            else{
-                                Log.i("Unreachable statement", "Arrived on a dark place in the startAdvisory() method");
-                            }
-                        startActivity(intent);
-
-                    }).show();
+            Intent intent = new Intent();
+            intent.putExtra("account", account);
+            switch (role) {
+                case "alumno":
+                    intent.setClass(getApplicationContext(), Student_Activity.class);
+                    startActivity(intent);
+                    break;
+                case "asesor":
+                    intent.setClass(getApplicationContext(), Teacher_Activity.class);
+                    startActivity(intent);
+                    break;
+                default:
+                    Log.i("Unreachable statement", "Arrived on a dark place in the startAdvisory() method");
+                    Toast.makeText(getApplicationContext(), "This shouldn't happen(startAdvisory() error). Please contact a developer", Toast.LENGTH_LONG).show();
+                    break;
+            }
+            finish();
         }
     }
 }
