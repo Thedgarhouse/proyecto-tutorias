@@ -14,7 +14,8 @@ public class Student_ActivityTest {
     @Test
     public void uriToStringTest() throws Exception{
         String photoUriString = "lh6.googleusercontent.com/-Lz0-OQ-iNFw/AAAAAAAAAAI/AAAAAAAAAA0/2w4qO8szh4Q/photo.jpg";
-        Uri photoUri = Uri.parse(photoUriString);
+        Uri photoUri;
+        photoUri = Uri.parse(photoUriString);
         assertEquals("Uri is wrong", "lh6.googleusercontent.com/-Lz0-OQ-iNFw/AAAAAAAAAAI/AAAAAAAAAA0/2w4qO8szh4Q/photo.jpg", photoUri.toString());
     }
 
