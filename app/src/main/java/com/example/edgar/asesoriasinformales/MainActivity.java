@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = new Intent();
+        intent.putExtra("account", account);
+        intent.setClass(getApplicationContext(), HistorialActivity.class);
+        startActivity(intent);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -251,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) && account != null){
             Intent intent = new Intent();
             intent.putExtra("account", account);
+
             switch (role) {
                 case "alumno":
                     intent.setClass(getApplicationContext(), Student_Activity.class);

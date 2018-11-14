@@ -33,6 +33,7 @@
         </activity>
         <activity android:name=".Teacher_Activity" />
         <activity android:name=".Student_Activity"/>
+        <activity android:name=".HistorialActivity" />
     </application>
 
 </manifest>
