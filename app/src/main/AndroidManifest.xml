@@ -28,12 +28,14 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Teacher_Activity" />
-        <activity android:name=".Student_Activity"/>
+        <activity android:name=".Student_Activity" />
         <activity android:name=".HistorialActivity" />
+        <activity android:name=".TeacherStats"></activity>
     </application>
 
 </manifest>
