@@ -64,10 +64,6 @@ public class TeacherStats extends AppCompatActivity implements View.OnClickListe
                         TextView promedioAsesoria = (TextView)findViewById(R.id.promedioAsesoria);
                         TextView cantidadAsesorias = (TextView)findViewById(R.id.cantidadAsesorias);
 
-                        String tiempoTotal;
-                        String promedio;
-                        String cantidad;
-
                         int acumTiempo = 0;
 
                         for(int x=0; x<asesoriaList.size(); x++)
