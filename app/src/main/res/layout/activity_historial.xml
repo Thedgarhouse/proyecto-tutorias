@@ -9,106 +9,58 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="0dp"
-        android:layout_height="610dp"
+        android:layout_width="384dp"
+        android:layout_height="511dp"
         android:background="@drawable/gradient"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:context=".MainActivity">
-
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:fontFamily="serif"
             android:gravity="center"
-            android:text="Historial de tutorias del asesor"
+            android:text="Historial de tutorias del alumno"
             android:textColor="#000"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/asesoria_view" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="3dip"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#ff0000"
+            app:layout_constraintBottom_toTopOf="@+id/boton"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.032" />
 
         <TableLayout
             android:id="@+id/table_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="540dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="332dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent">
 
-            <TableRow
-                android:id="@+id/table_row1"
-                android:layout_width="match_parent"
-                android:layout_height="191dp"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="serif"
-                    android:text="Asesor"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="serif"
-                    android:text="Inicio"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/position"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="serif"
-                    android:text="Fin"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="serif"
-                    android:text="Duración"
-                    android:textColor="#000" />
-
-            </TableRow>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dip"
-                android:background="#ff0000" />
         </TableLayout>
-
-        <ListView
-            android:id="@+id/asesoria_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"></ListView>
 
         <Button
             android:id="@+id/boton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="105dp"
+            android:layout_marginBottom="8dp"
             android:text="Nueva Asesoria"
-            app:layout_constraintBottom_toBottomOf="@+id/asesoria_view"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

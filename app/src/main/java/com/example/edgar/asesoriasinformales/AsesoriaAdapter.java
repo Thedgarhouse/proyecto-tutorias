@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.google.firebase.database.IgnoreExtraProperties;
-
 import java.util.List;
 
 public class AsesoriaAdapter extends BaseAdapter {
@@ -60,10 +58,10 @@ public class AsesoriaAdapter extends BaseAdapter {
         }
 
         Asesoria asesoria = (Asesoria) getItem(i);
-        holder.alumnoView.setText(asesoria.alumno);
-        holder.asesorView.setText(asesoria.asesor);
-        holder.inicioView.setText(asesoria.inicio);
-        holder.finView.setText(asesoria.fin);
+        holder.alumnoView.setText(asesoria.getAlumno());
+        holder.asesorView.setText(asesoria.getAsesor());
+        holder.inicioView.setText(asesoria.getInicio());
+        holder.finView.setText(asesoria.getFin());
         return view;
     }
 
