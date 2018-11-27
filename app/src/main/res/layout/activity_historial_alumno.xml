@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:gravity="center"
-            android:text="Historial de tutorias del asesor"
+            android:text="Historial de tutorias del alumno"
             android:textColor="#000"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
