@@ -14,4 +14,9 @@
     <string name="student_module">Módulo de Estudiante</string>
     <string name="available">Disponible</string>
     <string name="teacher_module">Módulo de Maestro</string>
+    <string name="estadisticas">Estadisticas</string>
+    <string name="ver_asesorias">Ver asesorias</string>
+    <string name="promedioAsesorias">0</string>
+    <string name="asesoriasImpartidas">0</string>
+    <string name="tiempoAsesorias">0</string>
 </resources>

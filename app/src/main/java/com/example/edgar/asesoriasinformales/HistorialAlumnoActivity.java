@@ -1,21 +1,11 @@
 package com.example.edgar.asesoriasinformales;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,32 +15,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.edgar.asesoriasinformales.connector.DatabaseConnector;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.Tag;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistorialActivity extends AppCompatActivity implements View.OnClickListener{
+public class HistorialAlumnoActivity extends AppCompatActivity implements View.OnClickListener{
     private AsesoriaAdapter asesoriaAdapter;
     private List<Asesoria> asesoriaList;
     public boolean conectado=false;
@@ -58,7 +30,7 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_historial);
+        setContentView(R.layout.activity_historial_alumno);
         final Button miBoton= (Button) findViewById(R.id.boton);
         miBoton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -115,7 +87,7 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
                     }, 1000);
                 }
                 if(!conectado){
-                    Toast.makeText(getApplicationContext(), "Error al conectar con alumno. Revisar que ambos tengan al comunicacion prendida", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error al conectar con asesor. Revisar que ambos tengan al comunicacion prendida", Toast.LENGTH_LONG).show();
 
                 }
 
@@ -131,7 +103,7 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void fillTable(){
-        RequestQueue queue = Volley.newRequestQueue(HistorialActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(HistorialAlumnoActivity.this);
         String databaseURLAsesorias = "https://tutorias-220600.firebaseio.com/";
 
             Asesoria asesoria = new Asesoria();

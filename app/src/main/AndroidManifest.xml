@@ -34,6 +34,8 @@
         <activity android:name=".Teacher_Activity" />
         <activity android:name=".Student_Activity"/>
         <activity android:name=".HistorialActivity" />
+        <activity android:name=".HistorialAlumnoActivity" />
+        <activity android:name=".TeacherStats" />
     </application>
 
 </manifest>
