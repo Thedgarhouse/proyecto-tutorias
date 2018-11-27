@@ -72,6 +72,7 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
                         public void run() {
                             Log.e("Estoy en el hilo?","Estas en el hilo");
                             if(!conectado){
+
                                 conectado=prepararMetodo(numero);
                             }
 
@@ -132,58 +133,51 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
     public void fillTable(){
         RequestQueue queue = Volley.newRequestQueue(HistorialActivity.this);
         String databaseURLAsesorias = "https://tutorias-220600.firebaseio.com/";
-        String query = databaseURLAsesorias + ".json";
+
             Asesoria asesoria = new Asesoria();
         // Request a string response from the provided URL.
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, query, null, new Response.Listener<JSONObject>() {
+        for(int i=1; i<=3;i++) {
+        String query = databaseURLAsesorias + "asesorias/"+i+".json";
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+            (Request.Method.GET, query, null, new Response.Listener<JSONObject>() {
 
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("Entre al response!!!","Otro MENSAJE!!!");
-
-                        asesoriaList= new ArrayList<>();
-                            try {
-                                Log.e("Entre al try!!!","Otro MENSAJEEEEEEEEEEEEEEE!!!");
-                                // Getting JSON Array node
-                                //JSONArray contacts = response.getJSONArray("asesorias");
-                                JSONArray contacts = response.getJSONArray("asesorias");
-                                Log.e("Contacts",contacts.toString());
-                                Log.e("Contacts lenght",""+contacts.length());
-                                // looping through All Contacts
-                                for (int i = 0; i < contacts.length()-1; i++) {
-                                    JSONObject c = contacts.getJSONObject(i);
-                                    Log.e("Entre al ciclo!!!","MENSAJE");
-
-                                        asesoria.alumno= c.getString("alumno");
-
-                                        asesoria.asesor= c.getString("asesor");
-                                        asesoria.horas= c.getString("duracion");
-                                        asesoria.horas= c.getString("inicio");
-                                        asesoria.horas= c.getString("fin");
-                                        asesoriaList.add(asesoria);
+                @Override
+                public void onResponse(JSONObject response) {
+                    asesoriaList = new ArrayList<>();
 
 
-                                }
-                            } catch (final JSONException e) {
-                                Log.e("Estoy tronando por aqui",e.getMessage());
-                                Log.e("Estoy tronando por aqui",e.toString());
-                            }
+                    try {
+                        asesoria.alumno= response.getString("alumno");
+                        asesoria.asesor= response.getString("asesor");
+                        asesoria.horas= response.getString("duracion");
+                        asesoria.horas= response.getString("inicio");
+                        asesoria.horas= response.getString("fin");
+                        asesoriaList.add(asesoria);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Error requesting user info. Please check Internet connection and try again", Toast.LENGTH_LONG).show();
-                        Log.e("Check User Error", error.toString());
-                    }
-                });
+
+                        }
 
 
 
-        queue.add(jsonObjectRequest);
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error requesting user info. Please check Internet connection and try again", Toast.LENGTH_LONG).show();
+                    Log.e("Check User Error", error.toString());
+                }
+            });
+            queue.add(jsonObjectRequest);
+        }
+
+
+
+
 
     }
 

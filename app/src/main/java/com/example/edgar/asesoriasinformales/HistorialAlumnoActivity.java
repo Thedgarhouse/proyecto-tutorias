@@ -121,11 +121,11 @@ public class HistorialAlumnoActivity extends AppCompatActivity implements View.O
 
 
                     try {
-                        asesoria.setAlumno(response.getString("alumno"));
-                        asesoria.setAsesor(response.getString("asesor"));
-                        asesoria.setHoras(response.getString("duracion"));
-                        asesoria.setInicio(response.getString("inicio")) ;
-                        asesoria.setFin(response.getString("fin"));
+                        asesoria.alumno= response.getString("alumno");
+                        asesoria.asesor= response.getString("asesor");
+                        asesoria.horas= response.getString("duracion");
+                        asesoria.horas= response.getString("inicio");
+                        asesoria.horas= response.getString("fin");
                         asesoriaList.add(asesoria);
                     } catch (JSONException e) {
                         e.printStackTrace();

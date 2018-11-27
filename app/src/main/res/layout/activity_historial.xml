@@ -9,10 +9,15 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="384dp"
-        android:layout_height="511dp"
+        android:layout_width="0dp"
+        android:layout_height="610dp"
         android:background="@drawable/gradient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:context=".MainActivity">
+
 
         <TextView
             android:id="@+id/textView2"
@@ -20,7 +25,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:gravity="center"
-            android:text="Historial de tutorias del alumno"
+            android:text="Historial de tutorias del asesor"
             android:textColor="#000"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +36,7 @@
             android:id="@+id/table_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="440dp"
+            android:layout_marginBottom="540dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -90,17 +95,18 @@
             android:id="@+id/asesoria_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ListView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"></ListView>
 
         <Button
             android:id="@+id/boton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="105dp"
             android:text="Nueva Asesoria"
             app:layout_constraintBottom_toBottomOf="@+id/asesoria_view"
             app:layout_constraintEnd_toEndOf="parent"

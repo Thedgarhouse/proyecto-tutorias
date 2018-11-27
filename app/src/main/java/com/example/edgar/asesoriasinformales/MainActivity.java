@@ -54,10 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = new Intent();
-        intent.putExtra("account", account);
-        intent.setClass(getApplicationContext(), HistorialActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent();
+       // intent.putExtra("account", account);
+        //intent.setClass(getApplicationContext(), TeacherStats.class);
+        //startActivity(intent);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
