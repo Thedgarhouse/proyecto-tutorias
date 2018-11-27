@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Intent intent = new Intent();
+       // intent.putExtra("account", account);
+        //intent.setClass(getApplicationContext(), TeacherStats.class);
+        //startActivity(intent);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -185,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void updateUI(GoogleSignInAccount acct) {
         if(acct != null){
             checkUser(acct.getEmail(), "email");
-            checkUser(acct.getId(), "ID");
         }
         else{
             Log.i("Initial Sign in", "No account");
@@ -251,13 +255,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) && account != null){
             Intent intent = new Intent();
             intent.putExtra("account", account);
+
             switch (role) {
                 case "alumno":
-                    intent.setClass(getApplicationContext(), Student_Activity.class);
+                    intent.setClass(getApplicationContext(), HistorialAlumnoActivity.class);
                     startActivity(intent);
                     break;
                 case "asesor":
-                    intent.setClass(getApplicationContext(), Teacher_Activity.class);
+                    intent.setClass(getApplicationContext(), TeacherStats.class);
                     startActivity(intent);
                     break;
                 default:
