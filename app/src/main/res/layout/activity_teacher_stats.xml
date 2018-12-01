@@ -25,8 +25,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/botonVerAsesorias"
+            app:layout_constraintStart_toEndOf="@+id/botonVerAsesorias"
             app:layout_constraintTop_toBottomOf="@+id/textView18"
             tools:text=" Disponible " />
 
@@ -55,7 +55,7 @@
             tools:text="Promedio por asesoría:" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/botonVerAsesorias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

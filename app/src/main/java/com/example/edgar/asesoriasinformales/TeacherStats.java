@@ -1,8 +1,12 @@
 package com.example.edgar.asesoriasinformales;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -25,6 +29,17 @@ public class TeacherStats extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_stats);
+        final Button miBoton = (Button) findViewById(R.id.botonVerAsesorias);
+        miBoton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), HistorialActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
 
     }
 
