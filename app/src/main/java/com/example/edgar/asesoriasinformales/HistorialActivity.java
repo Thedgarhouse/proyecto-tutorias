@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -50,49 +51,52 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistorialActivity extends AppCompatActivity implements View.OnClickListener{
+import android.widget.TableLayout;
+import android.widget.TableRow;
+
+public class HistorialActivity extends AppCompatActivity implements View.OnClickListener {
     private AsesoriaAdapter asesoriaAdapter;
     private List<Asesoria> asesoriaList;
-    public boolean conectado=false;
+    public boolean conectado = false;
     public int numero;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial);
-        final Button miBoton= (Button) findViewById(R.id.boton);
+        final Button miBoton = (Button) findViewById(R.id.boton);
         miBoton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Plip le pique al boton","que maduro");
-                for(int i=0;i<5;i++){
-                    numero=i;
-                    Log.e("Ciclo","ENTRE AL CICLO DE LOS NUMEROS!!!!");
+                Log.e("Plip le pique al boton", "que maduro");
+                for (int i = 0; i < 5; i++) {
+                    numero = i;
+                    Log.e("Ciclo", "ENTRE AL CICLO DE LOS NUMEROS!!!!");
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            Log.e("Estoy en el hilo?","Estas en el hilo");
-                            if(!conectado){
-
-                                conectado=prepararMetodo(numero);
+                            Log.e("Estoy en el hilo?", "Estas en el hilo");
+                            if (!conectado) {
+                                conectado = prepararMetodo(numero);
                             }
 
                         }
                     }, 5000);
                 }
-                if(!conectado){
+                if (!conectado) {
 
 
                 }
 
 
-
             }
         });
         fillTable();
-        asesoriaAdapter= new AsesoriaAdapter(this, asesoriaList);
+
+        asesoriaAdapter = new AsesoriaAdapter(this, asesoriaList);
         asesoriaAdapter.notifyDataSetChanged();
-        final ListView asesoriaView = (ListView) findViewById(R.id.asesoria_view);
-        asesoriaView.setAdapter(asesoriaAdapter);
+        //  final ListView asesoriaView = (ListView) findViewById(R.id.asesoria_view);
+        //  asesoriaView.setAdapter(asesoriaAdapter);
 
     }
 
@@ -100,92 +104,133 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.boton:
-                Log.e("Plip le pique al boton","que maduro");
-                for(int i=0;i<5;i++){
-                    Log.e("Ciclo","ENTRE AL CICLO DE LOS NUMEROS!!!!");
+                Log.e("Plip le pique al boton", "que maduro");
+                for (int i = 0; i < 5; i++) {
+                    Log.e("Ciclo", "ENTRE AL CICLO DE LOS NUMEROS!!!!");
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            Log.e("Estoy en el hilo?","Estas en el hilo");
-                            if(!conectado){
-                                conectado=prepararMetodo(4);
+                            Log.e("Estoy en el hilo?", "Estas en el hilo");
+                            if (!conectado) {
+                                conectado = prepararMetodo(4);
                             }
 
                         }
                     }, 1000);
                 }
-                if(!conectado){
+                if (!conectado) {
                     Toast.makeText(getApplicationContext(), "Error al conectar con alumno. Revisar que ambos tengan al comunicacion prendida", Toast.LENGTH_LONG).show();
 
                 }
 
 
-
                 break;
         }
-        }
+    }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
-    public void fillTable(){
+    public void fillTable() {
         RequestQueue queue = Volley.newRequestQueue(HistorialActivity.this);
         String databaseURLAsesorias = "https://tutorias-220600.firebaseio.com/";
-
-            Asesoria asesoria = new Asesoria();
+        String query = databaseURLAsesorias + ".json";
+        //   Asesoria asesoria;
         // Request a string response from the provided URL.
 
-        for(int i=1; i<=3;i++) {
-        String query = databaseURLAsesorias + "asesorias/"+i+".json";
-    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-            (Request.Method.GET, query, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, query, null, new Response.Listener<JSONObject>() {
 
 
-                @Override
-                public void onResponse(JSONObject response) {
-                    asesoriaList = new ArrayList<>();
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("Entre al response!!!", "Otro MENSAJE!!!");
+
+                        asesoriaList = new ArrayList<>();
+                        try {
+                            Log.e("Entre al try!!!", "Otro MENSAJEEEEEEEEEEEEEEE!!!");
+                            // Getting JSON Array node
+                            JSONArray contacts = response.getJSONArray("asesorias");
+
+                            //  Log.e("Contacts",contacts.toString());
+                            //  Log.e("Contacts lenght",""+contacts.length());
+                            // looping through All Contacts
 
 
-                    try {
-                        asesoria.alumno= response.getString("alumno");
-                        asesoria.asesor= response.getString("asesor");
-                        asesoria.horas= response.getString("duracion");
-                        asesoria.horas= response.getString("inicio");
-                        asesoria.horas= response.getString("fin");
-                        asesoriaList.add(asesoria);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                            for (int i = 0; i < contacts.length(); i++) {
+                                //               Log.e("Entre al ciclo!!!","*******"+contacts.get(i).toString());
+                                if (contacts.get(i).toString().equals("null") == false) {
 
+                                    JSONObject c = contacts.getJSONObject(i);
+                                    //   Log.e("Entre al ciclo!!!","MENSAJE");
 
+                                    String alumno = c.getString("alumno");
+                                    String asesor = c.getString("asesor");
+                                    String horas = c.getString("duracion");
+                                    String inicio = c.getString("inicio");
+                                    String fin = c.getString("fin");
+
+                                    asesoriaList.add(new Asesoria(alumno, asesor, inicio, fin, horas));
+                                }
+
+                            }
+                        } catch (final JSONException e) {
+                            Log.e("Estoy tronando por aqui", e.getMessage());
+                            Log.e("Estoy tronando por aqui", e.toString());
                         }
 
+                        TableLayout table = (TableLayout) findViewById(R.id.table_layout);
 
 
-            }, new Response.ErrorListener() {
+                        for (int x = 0; x < asesoriaList.size(); x++) {
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getApplicationContext(), "Error requesting user info. Please check Internet connection and try again", Toast.LENGTH_LONG).show();
-                    Log.e("Check User Error", error.toString());
-                }
-            });
-            queue.add(jsonObjectRequest);
-        }
+                            TableRow row = new TableRow(HistorialActivity.this);
 
+                            TextView taskdate = new TextView(HistorialActivity.this);
+                            taskdate.setTextSize(10);
+                            taskdate.setText(asesoriaList.get(x).getAsesor());
+                            row.addView(taskdate);
 
+                            TextView title = new TextView(HistorialActivity.this);
+                            taskdate.setText(asesoriaList.get(x).getInicio());
+                            row.addView(title);
+                            taskdate.setTextSize(10);
 
+                            TextView taskhour = new TextView(HistorialActivity.this);
+                            taskdate.setText(asesoriaList.get(x).getFin());
+                            taskhour.setTextSize(10);
+                            row.addView(taskhour);
+
+                            TextView description = new TextView(HistorialActivity.this);
+                            taskdate.setText(asesoriaList.get(x).getHoras());
+                            row.addView(description);
+                            description.setTextSize(10);
+
+                            table.addView(row);
+
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "Error requesting user info. Please check Internet connection and try again", Toast.LENGTH_LONG).show();
+                        Log.e("Check User Error", error.toString());
+                    }
+                });
+
+        queue.add(jsonObjectRequest);
 
 
     }
 
 
-public boolean prepararMetodo(int n){
-if(n==4){
-    Toast.makeText(getApplicationContext(), "Error al conectar con alumno. Revisar que ambos tengan al comunicacion prendida", Toast.LENGTH_LONG).show();
-}
+    public boolean prepararMetodo(int n) {
+        if (n == 4) {
+            Toast.makeText(getApplicationContext(), "Error al conectar con alumno. Revisar que ambos tengan al comunicacion prendida", Toast.LENGTH_LONG).show();
+        }
         return false;
-}
+    }
 }
