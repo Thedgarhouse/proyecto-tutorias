@@ -24,11 +24,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:text=" Disponible "
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/botonVerAsesorias"
             app:layout_constraintStart_toEndOf="@+id/botonVerAsesorias"
-            app:layout_constraintTop_toBottomOf="@+id/textView18"
-            tools:text=" Disponible " />
+            app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
         <TextView
             android:id="@+id/textView15"
@@ -36,11 +36,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="76dp"
+            android:text="Tiempo total asesorias:"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Tiempo total asesorías:" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView18"
@@ -48,24 +48,24 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:text="Promedio por asesoría:"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15"
-            tools:text="Promedio por asesoría:" />
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <Button
             android:id="@+id/botonVerAsesorias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="288dp"
+            android:layout_marginTop="284dp"
             android:layout_marginEnd="8dp"
+            android:text="Ver Asesorias"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.462"
+            app:layout_constraintHorizontal_bias="0.412"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/promedioAsesoria"
-            tools:text="Ver Asesorias" />
+            app:layout_constraintTop_toBottomOf="@+id/promedioAsesorias" />
 
         <TextView
             android:id="@+id/textView2"
@@ -74,33 +74,33 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
+            android:text="Estadisticas"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/switch1"
             app:layout_constraintHorizontal_bias="0.37"
             app:layout_constraintStart_toStartOf="@+id/textView15"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Estadisticas" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tiempoTotal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/textView15"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/promedioAsesoria"
+            android:id="@+id/tiempoAsesorias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="52dp"
+            android:text="@string/tiempoAsesorias"
+            app:layout_constraintStart_toEndOf="@+id/textView15"
+            app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/promedioAsesorias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/promedioAsesorias"
             app:layout_constraintBottom_toBottomOf="@+id/textView18"
-            app:layout_constraintStart_toEndOf="@+id/textView18"
-            tools:text="0" />
+            app:layout_constraintStart_toEndOf="@+id/textView18" />
 
         <TextView
             android:id="@+id/textView12"
@@ -108,21 +108,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:text="Asesorias impartidas:"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18"
-            tools:text="Asesorias impartidas:" />
+            app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
         <TextView
-            android:id="@+id/cantidadAsesorias"
+            android:id="@+id/asesoriasImpartidas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="60dp"
+            android:text="@string/asesoriasImpartidas"
             app:layout_constraintStart_toEndOf="@+id/textView12"
-            app:layout_constraintTop_toTopOf="@+id/tiempoTotal"
-            tools:text="0" />
+            app:layout_constraintTop_toTopOf="@+id/tiempoAsesorias" />
 
     </android.support.constraint.ConstraintLayout>
 
