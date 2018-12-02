@@ -146,11 +146,11 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("Entre al response!!!", "Otro MENSAJE!!!");
+                        Log.e("Entre al response!!!", "*******Otro MENSAJE!!!");
 
                         asesoriaList = new ArrayList<>();
                         try {
-                            Log.e("Entre al try!!!", "Otro MENSAJEEEEEEEEEEEEEEE!!!");
+                            Log.e("Entre al try!!!", "******Otro MENSAJEEEEEEEEEEEEEEE!!!");
                             // Getting JSON Array node
                             JSONArray contacts = response.getJSONArray("asesorias");
 
