@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateUI(GoogleSignInAccount acct) {
         if(acct != null){
-            checkUser(acct.getEmail(), "email");
+            checkUser(acct.getId(), "id");
         }
         else{
             Log.i("Initial Sign in", "No account");

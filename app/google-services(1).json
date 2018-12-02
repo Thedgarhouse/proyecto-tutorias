@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "32126012394",
+    "firebase_url": "https://tutorias-220600.firebaseio.com",
+    "project_id": "tutorias-220600",
+    "storage_bucket": "tutorias-220600.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32126012394:android:f905b49b0f01ef9d",
+        "android_client_info": {
+          "package_name": "com.example.edgar.asesoriasinformales"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32126012394-jcre34bls7mgq9h40f2sf9fd515n3v1g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6mGyo46-YJIpmjbjTqb7wIduVgLdMfBg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
