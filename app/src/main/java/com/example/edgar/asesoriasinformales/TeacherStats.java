@@ -1,10 +1,8 @@
 package com.example.edgar.asesoriasinformales;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +23,7 @@ public class TeacherStats extends AppCompatActivity implements View.OnClickListe
 
     private List<Asesoria> asesoriaList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +40,7 @@ public class TeacherStats extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        getTiempoAsesorias();
     }
 
     public void getTiempoAsesorias(){
@@ -75,9 +75,10 @@ public class TeacherStats extends AppCompatActivity implements View.OnClickListe
                             e.printStackTrace();
                         }
 
-                        TextView tiempoTotalAsesorias = (TextView)findViewById(R.id.tiempoTotal);
-                        TextView promedioAsesoria = (TextView)findViewById(R.id.promedioAsesoria);
-                        TextView cantidadAsesorias = (TextView)findViewById(R.id.cantidadAsesorias);
+                        final TextView tiempoTotalAsesorias = (TextView)findViewById(R.id.tiempoAsesorias);
+                        final TextView promedioAsesoria = (TextView)findViewById(R.id.promedioAsesorias);
+                        final TextView cantidadAsesorias = (TextView)findViewById(R.id.asesoriasImpartidas);
+
 
                         int acumTiempo = 0;
 
@@ -86,7 +87,8 @@ public class TeacherStats extends AppCompatActivity implements View.OnClickListe
                             acumTiempo = acumTiempo + Integer.parseInt(asesoriaList.get(x).getHoras().substring(0,0));
                         }
 
-                        tiempoTotalAsesorias.setText(acumTiempo);
+                       // tiempoTotalAsesorias.setText(acumTiempo);
+                        tiempoTotalAsesorias.setText("45");
                         promedioAsesoria.setText(acumTiempo/asesoriaList.size());
                         cantidadAsesorias.setText(asesoriaList.size());
                     }
