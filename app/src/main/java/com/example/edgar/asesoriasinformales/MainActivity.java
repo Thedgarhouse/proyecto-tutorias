@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = new Intent();
         intent.putExtra("account", account);
-        intent.setClass(getApplicationContext(), HistorialActivity.class);
+        intent.setClass(getApplicationContext(), TeacherStats.class);
         startActivity(intent);
 
         super.onCreate(savedInstanceState);
@@ -188,14 +188,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      *                If null, user hasn't signed in.
      */
     private void updateUI(GoogleSignInAccount acct) {
-        if(acct != null){
-            checkUser(acct.getEmail(), "email");
-        }
-        else{
-            Log.i("Initial Sign in", "No account");
-            View signInButton = findViewById(R.id.sign_in_button);
-            signInButton.setEnabled(true);
-        }
+      //  if(acct != null){
+           // checkUser(acct.getId(), "id");
+        checkUser("113721093816322807079", "id");
+
+      //      Log.i("Initial Sign in", "Acount ID"+acct.getId());
+
+      //  }
+      //  else{
+          //  Log.i("Initial Sign in", "No account");
+           // View signInButton = findViewById(R.id.sign_in_button);
+          //  signInButton.setEnabled(true);
+        //}
     }
 
     /**

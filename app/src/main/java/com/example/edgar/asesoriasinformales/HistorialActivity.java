@@ -68,14 +68,11 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
         miBoton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Plip le pique al boton", "que maduro");
                 for (int i = 0; i < 5; i++) {
                     numero = i;
-                    Log.e("Ciclo", "ENTRE AL CICLO DE LOS NUMEROS!!!!");
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            Log.e("Estoy en el hilo?", "Estas en el hilo");
                             if (!conectado) {
                                 conectado = prepararMetodo(numero);
                             }
@@ -104,13 +101,10 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.boton:
-                Log.e("Plip le pique al boton", "que maduro");
                 for (int i = 0; i < 5; i++) {
-                    Log.e("Ciclo", "ENTRE AL CICLO DE LOS NUMEROS!!!!");
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            Log.e("Estoy en el hilo?", "Estas en el hilo");
                             if (!conectado) {
                                 conectado = prepararMetodo(4);
                             }
@@ -152,7 +146,7 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
                         try {
                             Log.e("Entre al try!!!", "******Otro MENSAJEEEEEEEEEEEEEEE!!!");
                             // Getting JSON Array node
-                            JSONArray contacts = response.getJSONArray("asesorias");
+                            JSONArray contacts = response.getJSONArray("asesorias2");
 
                             //  Log.e("Contacts",contacts.toString());
                             //  Log.e("Contacts lenght",""+contacts.length());
@@ -190,7 +184,7 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
 
                             TextView taskdate = new TextView(HistorialActivity.this);
                             taskdate.setTextSize(10);
-                            taskdate.setText(asesoriaList.get(x).getAsesor()+"\t\t\t\t");
+                            taskdate.setText(asesoriaList.get(x).getAlumno()+"\t\t\t\t");
                             row.addView(taskdate);
 
                             TextView title = new TextView(HistorialActivity.this);
