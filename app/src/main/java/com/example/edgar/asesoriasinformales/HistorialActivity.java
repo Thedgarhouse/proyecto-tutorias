@@ -221,10 +221,15 @@ public class HistorialActivity extends AppCompatActivity implements View.OnClick
     }
 
 
+
     public boolean prepararMetodo(int n) {
         if (n == 4) {
             Toast.makeText(getApplicationContext(), "Error al conectar con alumno. Revisar que ambos tengan al comunicacion prendida", Toast.LENGTH_LONG).show();
         }
         return false;
+    }
+
+    public List<Asesoria> getAsesoriaList() {
+        return asesoriaList;
     }
 }
